@@ -98,19 +98,22 @@ const TheBoyzPage = () => {
 
   const handleSelectSlot = (slot) => {
     const dateKey = selectedDate.toDateString()
+    if (isSlotBooked(slot)) {
+      alert('This slot is already booked.')
+      return
+    }
 
     if (selectedTime === slot) {
       setSelectedTime(null)
       setBookedSlots((prev) => ({
         ...prev,
-        [dateKey]:
-          prev[dateKey]?.filter((bookedSlot) => bookedSlot !== slot) || [],
+        [dateKey]: prev[dateKey]?.filter((s) => s !== slot) || [],
       }))
     } else {
       setSelectedTime(slot)
       setBookedSlots((prev) => ({
         ...prev,
-        [dateKey]: [slot],
+        [dateKey]: [...(prev[dateKey] || []), slot],
       }))
     }
   }
@@ -158,190 +161,97 @@ const TheBoyzPage = () => {
 
       {/* Service Type Selection */}
       <Container className="my-4">
-  <h3>Service Type Selection</h3>
-  <Row className="text-center justify-content-center">
-    <Col md={3}>
-    <Card
-  className="text-center service-card"
-  style={{ height: '10%', display: 'flex', flexDirection: 'column' }}
->
-  <Card.Img
-    variant="top"
-    src="https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fHNhbG9ufGVufDB8fDB8fHww"
-    alt="Saloon"
-    style={{ flex: '1', objectFit: 'cover' }} // Ensure image fills the card
-  />
-  <Card.Body style={{ padding: 0, marginTop: 'auto' }}>
-    <Button
-      style={{
-        backgroundColor: selectedServiceType === 'Saloon' ? '#FF4081' : 'transparent',
-        color: selectedServiceType === 'Saloon' ? '#fff' : '#000',
-        borderColor: selectedServiceType === 'Saloon' ? '#FF4081' : '#000',
-        padding: '10px 0', // Adjusted padding
-        fontSize: '18px', // Adjusted font size
-        width: '100%', // Full-width button
-        height: '50px', // Adjust button height
-        borderRadius: '0 0 15px 15px', // Rounded only at the bottom
-        borderTop: 'none', // Remove border from the top if needed
-        boxShadow: 'none', // No hover shadow
-        transition: 'none', // Disable hover transition
-        display: 'block',
-        textAlign: 'center',
-      }}
-      onClick={() => setSelectedServiceType('Saloon')}
-      className="no-hover"
-    >
-      Saloon
-    </Button>
-  </Card.Body>
-</Card>
+        <h3>Service Type Selection</h3>
+        <Row className="text-center justify-content-center">
+          <Col md={3}>
+            <Card
+              className={`service-card ${
+                selectedServiceType === 'Saloon' ? 'selected' : ''
+              }`}
+              onClick={() => setSelectedServiceType('Saloon')}
+            >
+              <Card.Img
+                variant="top"
+                src="https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fHNhbG9ufGVufDB8fDB8fHww"
+                alt="Saloon"
+                className="card-img-top"
+                style={{
+                  objectFit: 'cover', // Ensure image fills its space
+                  height: '200px', // Limit image height
+                }}
+              />
+              <Card.Body style={{ padding: '10px', height: '60px' }}>
+                <Card.Title style={{ fontSize: '16px' }}>Saloon</Card.Title>
+              </Card.Body>
+            </Card>
+          </Col>
+          <Col md={3}>
+            <Card
+              className={`service-card ${
+                selectedServiceType === 'Door Step' ? 'selected' : ''
+              }`}
+              onClick={() => setSelectedServiceType('Door Step')}
+            >
+              <Card.Img
+                variant="top"
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdpzi9Qik5BfpRZiUkT0oxN4zcurAMD3ZA_w&s"
+                alt="Door Step"
+                className="card-img-top"
+                style={{
+                  objectFit: 'cover',
+                  height: '200px',
+                }}
+              />
+              <Card.Body style={{ padding: '10px', height: '60px' }}>
+                <Card.Title style={{ fontSize: '16px' }}>Door Step</Card.Title>
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
 
-    </Col>
-    <Col md={3}>
-      <Card
-        className="text-center service-card"
-        style={{ height: '30%', display: 'flex', flexDirection: 'column' }}
-      >
-        <Card.Img
-          variant="top"
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdpzi9Qik5BfpRZiUkT0oxN4zcurAMD3ZA_w&s"
-          alt="Door Step"
-        />
-        <Card.Body style={{ padding: 0, marginTop: 'auto' }}>
-    <Button
-      style={{
-        backgroundColor: selectedServiceType === 'Door Step' ? '#FF4081' : 'transparent',
-        color: selectedServiceType === 'Door Step' ? '#fff' : '#000',
-        borderColor: selectedServiceType === 'Door Step' ? '#FF4081' : '#000',
-        padding: '10px 0', // Adjusted padding
-        fontSize: '18px', // Adjusted font size
-        width: '100%', // Full-width button
-        height: '50px', // Adjust button height
-        borderRadius: '0 0 15px 15px', // Rounded only at the bottom
-        borderTop: 'none', // Remove border from the top if needed
-        boxShadow: 'none', // No hover shadow
-        transition: 'none', // Disable hover transition
-        display: 'block',
-        textAlign: 'center',
-      }}
-      onClick={() => setSelectedServiceType('Door Step')}
-    >
-      Door Step
-    </Button>
-  </Card.Body>
-      </Card>
-    </Col>
-  </Row>
-
-  {/* Gender Selection */}
-  <h3>Gender Selection</h3>
-  <Row className="text-center my-3 justify-content-center">
-    <Col md={3}>
-      <Card
-        className="text-center service-card"
-        style={{ height: '30%', display: 'flex', flexDirection: 'column' }}
-      >
-        <Card.Img
-          variant="top"
-          src="https://t3.ftcdn.net/jpg/05/06/74/32/360_F_506743235_coW6QAlhxlBWjnRk0VNsHqaXGGH9F4JS.jpg"
-          alt="Men"
-        />
-        <Card.Body style={{ padding: 0, marginTop: 'auto' }}>
-    <Button
-      style={{
-        backgroundColor: setSelectedGender === 'Men' ? '#FF4081' : 'transparent',
-        color: setSelectedGender === 'Men' ? '#fff' : '#000',
-        borderColor: setSelectedGender === 'Men' ? '#FF4081' : '#000',
-        padding: '10px 0', // Adjusted padding
-        fontSize: '18px', // Adjusted font size
-        width: '100%', // Full-width button
-        height: '50px', // Adjust button height
-        borderRadius: '0 0 15px 15px', // Rounded only at the bottom
-        borderTop: 'none', // Remove border from the top if needed
-        boxShadow: 'none', // No hover shadow
-        transition: 'none', // Disable hover transition
-        display: 'block',
-        textAlign: 'center',
-      }}
-      onClick={() => setSelectedGender('Men')}
-    >
-      Men
-    </Button>
-  </Card.Body>
-      </Card>
-    </Col>
-    <Col md={3}>
-      <Card
-        className="text-center service-card"
-        style={{ height: '30%', display: 'flex', flexDirection: 'column' }}
-      >
-        <Card.Img
-          variant="top"
-          src="https://img.freepik.com/free-photo/beautiful-woman-getting-her-hair-cut-home-by-hairdresser_23-2148817217.jpg"
-          alt="Women"
-        />
-        <Card.Body style={{ padding: 0, marginTop: 'auto' }}>
-    <Button
-      style={{
-        backgroundColor: setSelectedGender === 'Women' ? '#FF4081' : 'transparent',
-        color: setSelectedGender === 'Women' ? '#fff' : '#000',
-        borderColor: setSelectedGender === 'Women' ? '#FF4081' : '#000',
-        padding: '10px 0', // Adjusted padding
-        fontSize: '18px', // Adjusted font size
-        width: '100%', // Full-width button
-        height: '50px', // Adjust button height
-        borderRadius: '0 0 15px 15px', // Rounded only at the bottom
-        borderTop: 'none', // Remove border from the top if needed
-        boxShadow: 'none', // No hover shadow
-        transition: 'none', // Disable hover transition
-        display: 'block',
-        textAlign: 'center',
-      }}
-      onClick={() => setSelectedGender('Women')}
-    >
-      Women
-    </Button>
-  </Card.Body>
-      </Card>
-    </Col>
-    <Col md={3}>
-      <Card
-        className="text-center service-card"
-        style={{ height: '30%', display: 'flex', flexDirection: 'column' }}
-      >
-        <Card.Img
-          variant="top"
-          src="https://media.istockphoto.com/id/825461082/photo/5-year-old-getting-a-haircut.jpg?s=612x612&w=0&k=20&c=ax37u3ZD2p7odcIyhTO82hqww5lJ8fOAUJXsUVP2Ag8="
-          alt="Kids"
-        />
-       <Card.Body style={{ padding: 0, marginTop: 'auto' }}>
-    <Button
-      style={{
-        backgroundColor: setSelectedGender === 'Kids' ? '#FF4081' : 'transparent',
-        color: setSelectedGender === 'Kids' ? '#fff' : '#000',
-        borderColor: setSelectedGender === 'Kids' ? '#FF4081' : '#000',
-        padding: '10px 0', // Adjusted padding
-        fontSize: '18px', // Adjusted font size
-        width: '100%', // Full-width button
-        height: '50px', // Adjust button height
-        borderRadius: '0 0 15px 15px', // Rounded only at the bottom
-        borderTop: 'none', // Remove border from the top if needed
-        boxShadow: 'none', // No hover shadow
-        transition: 'none', // Disable hover transition
-        display: 'block',
-        textAlign: 'center',
-      }}
-      onClick={() => setSelectedGender('Kids')}
-    >
-      Kids
-    </Button>
-  </Card.Body>
-      </Card>
-    </Col>
-  </Row>
-</Container>
-
-
+        {/* Gender Selection */}
+        <h3>Gender Selection</h3>
+        <Container className="my-4 py-4 px-4">
+          <Row className="justify-content-center">
+            {[
+              {
+                gender: 'Men',
+                img: 'https://t3.ftcdn.net/jpg/05/06/74/32/360_F_506743235_coW6QAlhxlBWjnRk0VNsHqaXGGH9F4JS.jpg',
+              },
+              {
+                gender: 'Women',
+                img: 'https://img.freepik.com/free-photo/beautiful-woman-getting-her-hair-cut-home-by-hairdresser_23-2148817217.jpg',
+              },
+              {
+                gender: 'Kids',
+                img: 'https://media.istockphoto.com/id/825461082/photo/5-year-old-getting-a-haircut.jpg?s=612x612&w=0&k=20&c=ax37u3ZD2p7odcIyhTO82hqww5lJ8fOAUJXsUVP2Ag8=',
+              },
+            ].map(({ gender, img }) => (
+              <Col md={4} key={gender}>
+                <Card
+                  className={`service-card ${
+                    selectedGender === gender ? 'selected' : ''
+                  }`}
+                  onClick={() => setSelectedGender(gender)}
+                >
+                  <Card.Img
+                    variant="top"
+                    src={img}
+                    alt={gender}
+                    style={{
+                      objectFit: 'cover',
+                      height: '200px', // Adjust image height
+                    }}
+                  />
+                  <Card.Body>
+                    <Card.Title>{gender}</Card.Title>
+                  </Card.Body>
+                </Card>
+              </Col>
+            ))}
+          </Row>
+        </Container>
+      </Container>
 
       {/* Service Selection */}
       <Container className="my-4 py-4 px-4">

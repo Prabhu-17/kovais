@@ -1,13 +1,4 @@
-:root {
-    --primary-color: #4A90E2; /* Lighter blue for main interactions */
-    --secondary-color: #FF4081; /* Accent color for buttons and headings */
-    --background-color: #F8F9FA; /* Light background */
-    --text-color: #333; /* Primary text color */
-    --dark-background: #343a40; /* Dark background for banners */
-    --button-hover: #007bff; /* Darker blue for button hover */
-    --font-family: 'Roboto', sans-serif; /* Use a modern, clean font */
-  }
-  
+
   body {
     font-family: var(--font-family);
     background-color: var(--background-color);
@@ -106,6 +97,21 @@
   .service-card .card-img-top {
     border-radius: 10px 10px 0 0;
   }
+
+   .service-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .service-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  }
+
+  .service-card.selected {
+  /* border: 2px solid #ff4081; Pink border */
+  background-color: #ff4081; /* Matches border color */
+}
+
   
   .card-title {
     font-weight: bold;
@@ -172,14 +178,7 @@
   }
   
 
-  .service-card {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-  
-  .service-card:hover {
-    transform: scale(1.05);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-  }
+ 
   
   /* Disable hover effect for the button */
 .no-hover:hover {

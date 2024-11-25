@@ -16,14 +16,6 @@ import Hotel from './RoomSearch/RoomSearch'
 import SearchResults from './RoomSearch/SearchResults';  // You'll create this for showing results
 import Gym from './gym/gym';
 
-
-// import About from './About'
-
-//import Spa from './beaut spa/Spa'
-// import Subscr from './comp/subscr'
-
-
-
 // Loading Component
 const Loading = () => (
   <div className="loading">
@@ -149,7 +141,7 @@ const MainContent = () => (
   <>
 
     {/* Hero Section */}
-    <section className="text-center p-5 text-light hero">
+    <section className="text-center p-5 text-light hero ">
       <Container className="pt-5">
         <h1 className="hero-header">
           <span className="span-text">
@@ -330,12 +322,6 @@ const App = () => {
               <Route path="/RoomSearch" element={<Hotel />}/>
               <Route path="/search-results" element={<SearchResults />} />
               <Route path="/gym" element={<Gym />} />
-             
-              {/* <Route path="#" element={<About />} />
-              <Route path="#" element={<Spa />} />
-              <Route path="#" element={<Hotel />} />
-              <Route path="#" element={<Subscr />} /> */}
-              {/* Replace the default route with the new MainContent */}
               <Route path="/" element={<MainContent />} />
               
             </Routes>

@@ -68,7 +68,7 @@ body {
 }
 .hero{
   height: 105vh;
-  margin-top: -105px;
+  margin-top: -105px !important;
 }
 
 .loader {
@@ -563,7 +563,7 @@ body {
   padding: 10px; /* Adjust padding as needed */
   text-align: center;
   position: fixed; /* Fixed position for watermark effect */
-  bottom: 0;
+  bottom: 20;
   right: 0;
   left: 100;
   margin: 0;
@@ -715,5 +715,7 @@ body {
   .footer {
     font-size: 0.8rem;
   }
+
 }
+
 
